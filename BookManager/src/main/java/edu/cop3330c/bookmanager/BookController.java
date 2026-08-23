@@ -3,6 +3,9 @@
 // 11/20/24
 // Book controller component in MVC example
 
+//Martrell Varnadore
+//8/20/26
+//This program manages a list of favorite books using the MVC pattern
 package edu.cop3330c.bookmanager;
 
 import java.io.*;
@@ -29,24 +32,29 @@ public class BookController {
     }
 
     public void saveBooksToFile(String fileName) {
-        // TODO: create an ObjectOutputStream named oos that nests
-        //       a FileOutputStream constructed from fileName
-        //       The streams must be created in a try-with-resources
-        try (...) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                new FileOutputStream(fileName))) {
+
             oos.writeObject(books);
             view.showMessage("Books saved to file: " + fileName);
+
+        } catch (IOException e) {
+            view.showMessage("Error saving books: " + e.getMessage());
+        
+      
         } catch (IOException e) {
             view.showMessage("Error saving books: " + e.getMessage());
         }
     }
 
     public void loadBooksFromFile(String fileName) {
-        // TODO: create an ObjectInputStream named ois that nests
-        //       a FileInputStream constructed from fileName
-        //       The streams must be created in a try-with-resources
-        try (...) {
+        try (ObjectInputStream ois = new ObjectInputStream(
+                new FileInputStream(fileName))) {
+
             books = (List<Book>) ois.readObject();
             view.showMessage("Books loaded from file: " + fileName);
+       
+       
         } catch (IOException | ClassNotFoundException e) {
             view.showMessage("Error loading books: " + e.getMessage());
         }
